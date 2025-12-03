@@ -17,6 +17,21 @@ def init_db():
     conn.commit()
     conn.close()
 
+@app.route("/upload", methods=["POST"])
+def upload():
+    if "image" not in request.files:
+        return {"error": "No image provided"}, 400
+
+    image = request.files["image"]
+    image.save("static/latest.jpg")
+
+    # Optional: update status text
+    global latest_status
+    latest_status = request.form.get("status", "Updated")
+
+    return {"success": True}
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     message = ""
