@@ -43,16 +43,16 @@
             <div class="alert alert-info text-center">{{ message }}</div>
             {% endif %}
 
-            <form method="POST" class="text-center">
+            <form method="POST" action="/" class="text-center">
                 <input type="email" name="email" class="form-control form-control-lg mb-3"
-                       placeholder="Your email" required>
+                    placeholder="Your email" required>
 
                 <div class="d-grid gap-2">
-                    <button type="submit" name="subscribe" class="btn btn-success btn-lg">
-                        Subscribe
+                    <button type="submit" name="action" value="subscribe" class="btn btn-success btn-lg">
+                    Subscribe
                     </button>
-                    <button type="submit" name="unsubscribe" class="btn btn-danger btn-lg">
-                        Unsubscribe
+                    <button type="submit" name="action" value="unsubscribe" class="btn btn-danger btn-lg">
+                    Unsubscribe
                     </button>
                 </div>
 
@@ -60,6 +60,7 @@
                     You can change your subscription settings here at any time.
                 </small>
             </form>
+
 
         </div>
     </div>
