@@ -13,10 +13,18 @@ IMAGE_PATH = os.getenv("IMAGE_PATH", "static/latest.jpg")
 os.makedirs("static", exist_ok=True)
 
 def get_db():
-    """Open connection to the DB."""
+    """Open connection to the DB and ensure table exists."""
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
+    c = conn.cursor()
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS subscribers (
+            email TEXT PRIMARY KEY
+        );
+    """)
+    conn.commit()
     return conn
+
 
 def init_db():
     """Initialize the subscribers table."""
@@ -61,6 +69,9 @@ def home():
                     message = "Subscribed successfully"
                 except sqlite3.IntegrityError:
                     message = "Already subscribed"
+                except Exception as e:
+                    message = f"DB Error: {e}"
+
             elif action == "unsubscribe":
                 c.execute("DELETE FROM subscribers WHERE email = ?", (email,))
                 conn.commit()
